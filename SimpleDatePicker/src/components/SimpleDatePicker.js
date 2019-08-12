@@ -5,8 +5,10 @@ import {
   Platform,
   View,
   StyleSheet,
+  Text,
 } from 'react-native';
 import Moment from 'moment';
+import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
 
 import SimpleDropdown from './SimpleDropdown';
 
@@ -18,6 +20,11 @@ const styles = StyleSheet
       container: {
         flex: 1,
         flexDirection: 'row',
+        alignItems: 'center',
+      },
+      icon: {
+        alignItems: 'center',
+        justifyContent: 'center',
       },
     },
   );
@@ -126,26 +133,34 @@ class SimpleDatePicker extends React.Component {
       onDatePicked,
     } = this.props;
     if (onDatePicked) {
-      const {
-        day,
-        month,
-        year,
-      } = this.state;
-      if (day >= 0 && month >= 0 && year >= 0) {
-        const { yearData } = this.state;
+      const currentMoment = this.getCurrentMoment();
+      if (currentMoment) {
         return onDatePicked(
-          Moment(
-            `${yearData[year]}-${pad(month + 1, 2)}-${pad(day + 1, 2)}`,
-            'YYYY-MM-DD',
-          ),
+          currentMoment,
         );
       }
     }
     return false;
-  }
-  onLayout = ({ nativeEvent: { layout: { width } } }) => this.setState(
+  };
+  getCurrentMoment = () => {
+    const {
+      day,
+      month,
+      year,
+    } = this.state;
+    if (day >= 0 && month >= 0 && year >= 0) {
+      const { yearData } = this.state;
+      return Moment(
+        `${yearData[year]}-${pad(month + 1, 2)}-${pad(day + 1, 2)}`,
+        'YYYY-MM-DD',
+      );
+    }
+    return null;
+  };
+  onLayout = ({ nativeEvent: { layout: { width, height } } }) => this.setState(
     {
       width,
+      height,
     },
   );
   static getDayData = (year, yearData, month, monthData) => {
@@ -161,10 +176,12 @@ class SimpleDatePicker extends React.Component {
       maxDate,
       onDatePicked,
       disabled,
+      renderDescription,
     } = this.props;
     const {
       date,
       width,
+      height,
       monthOpen,
       monthData,
       month,
@@ -175,66 +192,128 @@ class SimpleDatePicker extends React.Component {
       yearData,
       year,
     } = this.state;
-    const yearDisabled = (dayOpen || monthOpen);
-    const monthDisabled = (year < 0) || (dayOpen || yearOpen);
-    const dayDisabled = (month < 0) || (monthOpen || yearOpen);
+    const {
+      disabledColor,
+      borderWidth,
+      borderRadius,
+      padding,
+      highlightColor,
+    } = theme;
+    const dropdownStyle = {
+      borderWidth,
+      padding,
+      borderRadius,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'white',
+    };
+    const iconWidth = 25;
+    const yearDisabled = false;//(dayOpen || monthOpen);
+    const monthDisabled = (year < 0);// || (dayOpen || yearOpen);
+    const dayDisabled = (month < 0);// || (monthOpen || yearOpen);
+    const sharedWidth = (width - ((3 * padding) + iconWidth));
+    const currentMoment = this.getCurrentMoment();
     return (
       <Container
-        onLayout={this.onLayout}
       >
-        {(!!width) && (
-          <React.Fragment
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+          }}
+          onLayout={this.onLayout}
+        >
+          <View
+            style={[
+              styles.icon,
+              {
+                width: iconWidth,
+                height: iconWidth,
+                overflow: 'hidden',
+              },
+            ]}
           >
-            <View
-              style={{
-                width: width * 0.33,
-              }}
-            >
-              <SimpleDropdown
-                theme={theme}
-                placeholder="Year"
-                disabled={disabled || yearDisabled}
-                index={year}
-                options={yearData}
-                open={yearOpen}
-                onOptionSelected={this.onYearSelected}
-                onRequestOpen={() => this.setState({ yearOpen: true })}
-              />
-            </View>
-            <View
-              style={{
-                width: width * 0.33,
-              }}
-            >
-              <SimpleDropdown
-                theme={theme}
-                placeholder="Month"
-                disabled={disabled || monthDisabled}
-                index={month}
-                options={monthData}
-                open={monthOpen}
-                onOptionSelected={this.onMonthSelected}
-                onRequestOpen={() => this.setState({ monthOpen: true })}
-              />
-            </View>
-            <View
-              style={{
-                width: width * 0.33,
-              }}
-            >
-              <SimpleDropdown
-                theme={theme}
-                placeholder="Day"
-                disabled={disabled || dayDisabled}
-                index={day}
-                options={dayData}
-                open={dayOpen}
-                onOptionSelected={this.onDaySelected}
-                onRequestOpen={() => this.setState({ dayOpen: true })}
-              />
-            </View>
-          </React.Fragment>
-        )} 
+            <FontAwesomeIcon
+              color={disabledColor}
+              name="calendar"
+              size={20}
+            />
+          </View>
+          <View
+            pointerEvents={(dayOpen || monthOpen) ? 'none' : 'auto'}
+            style={[
+              dropdownStyle,
+              {
+                height,
+                marginHorizontal: padding,
+                width: sharedWidth * 0.30,
+                borderColor: yearOpen ? highlightColor : disabledColor,
+              },
+            ]}
+          >
+            <SimpleDropdown
+              theme={theme}
+              placeholder="Year"
+              disabled={disabled || yearDisabled}
+              index={year}
+              options={yearData}
+              open={yearOpen}
+              onOptionSelected={this.onYearSelected}
+              onRequestOpen={() => this.setState({ yearOpen: true })}
+            />
+          </View>
+          <View
+            pointerEvents={(dayOpen || yearOpen) ? 'none' : 'auto'}
+            style={[
+              dropdownStyle,
+              {
+                height,
+                marginRight: padding,
+                width: sharedWidth * 0.5,
+                borderColor: monthOpen ? highlightColor : disabledColor,
+              },
+            ]}
+          >
+            <SimpleDropdown
+              theme={theme}
+              placeholder="Month"
+              disabled={disabled || monthDisabled}
+              index={month}
+              options={monthData}
+              open={monthOpen}
+              onOptionSelected={this.onMonthSelected}
+              onRequestOpen={() => this.setState({ monthOpen: true })}
+            />
+          </View>
+          <View
+            pointerEvents={(monthOpen || yearOpen) ? 'none' : 'auto'}
+            style={[
+              dropdownStyle,
+              {
+                height,
+                width: sharedWidth * 0.2,
+                borderColor: dayOpen ? highlightColor : disabledColor,
+              },
+            ]}
+          >
+            <SimpleDropdown
+              theme={theme}
+              placeholder="Day"
+              disabled={disabled || dayDisabled}
+              index={day}
+              options={dayData}
+              open={dayOpen}
+              onOptionSelected={this.onDaySelected}
+              onRequestOpen={() => this.setState({ dayOpen: true })}
+            />
+          </View> 
+        </View>
+        {((!!renderDescription) && (!!currentMoment)) && (
+          renderDescription(
+            currentMoment,
+            theme,
+          )
+        )}
       </Container>
     );
   }
@@ -248,19 +327,25 @@ SimpleDatePicker.propTypes = {
   onDatePicked: PropTypes.func,
   minDate: PropTypes.shape({}),
   maxDate: PropTypes.shape({}),
+  renderDescription: PropTypes.func,
 };
 
 SimpleDatePicker.defaultProps = {
-  Container: ({ children, ...extraProps}) => (
+  Container: ({ children, ...extraProps }) => (
     <View
-      style={styles.container}
       {...extraProps}
     >
       {children}
     </View>
   ),
   theme: {
-    
+    fontSize: 16,
+    color: '#444444',
+    disabledColor: '#CCCCCC',
+    borderRadius: 5,
+    padding: 5,
+    borderWidth: 1,
+    highlightColor: 'blue',
   },
   date: undefined,
   onDatePicked: (moment) => {
@@ -275,6 +360,17 @@ SimpleDatePicker.defaultProps = {
   },
   minDate: Moment().subtract(100, 'years'),
   maxDate: Moment(),
+  renderDescription: (moment, { disabledColor }) => (
+    <Text
+      style={{
+        color: disabledColor,
+        alignSelf: 'flex-end',
+        fontSize: 13,
+      }}
+    >
+      {`${moment.format('dddd LL')}.`}
+    </Text>
+  ),
 };
 
 export default SimpleDatePicker;

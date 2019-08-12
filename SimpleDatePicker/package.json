@@ -24,6 +24,7 @@
     "react-dom": "^16.6.x",
     "react-native": "0.55.x",
     "react-native-material-menu": "https://github.com/cawfree/react-native-material-menu",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.10.x"
   },
   "devDependencies": {

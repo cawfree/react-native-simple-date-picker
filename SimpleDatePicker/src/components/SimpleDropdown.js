@@ -48,6 +48,11 @@ class SimpleDropdown extends React.Component {
       style,
       ...extraProps
     } = this.props;
+    const {
+      color,
+      disabledColor,
+      fontSize,
+    } = theme;
     return (
       <View
         style={[
@@ -63,6 +68,8 @@ class SimpleDropdown extends React.Component {
             <Text
               style={{
                 flex: 1,
+                color: disabled ? disabledColor : color,
+                fontSize,
               }}
               onPress={onRequestOpen}
               disabled={disabled}

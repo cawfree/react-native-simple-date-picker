@@ -2,6 +2,7 @@
   "dependencies": {
     "moment": "^2.24.0",
     "react-native-material-menu": "https://github.com/cawfree/react-native-material-menu",
+    "react-native-vector-icons": "^6.6.0",
     "react-timer-mixin": "^0.13.4"
   }
 }
