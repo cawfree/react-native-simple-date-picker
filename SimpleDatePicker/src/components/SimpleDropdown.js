@@ -3,17 +3,12 @@ import {
   Dimensions,
   Text,
   ScrollView,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import MaterialMenu, { MenuItem } from 'react-native-material-menu';
 
 class SimpleDropdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
   componentDidMount() {
     const {
       open,
@@ -41,6 +36,7 @@ class SimpleDropdown extends React.Component {
   }
   render() {
     const {
+      theme,
       open,
       disabled,
       children,
@@ -49,45 +45,56 @@ class SimpleDropdown extends React.Component {
       onOptionSelected,
       index,
       placeholder,
+      style,
       ...extraProps
     } = this.props;
-    const {
-
-    } = this.state;
     return (
-      <MaterialMenu
-        ref="menu"
-        button={
-          <Text
-            onPress={onRequestOpen}
-            disabled={disabled}
-          >
-            {index >= 0 ? options[index] : placeholder}
-          </Text>
-        }
-        {...extraProps}
+      <View
+        style={[
+          style,
+        ]}
+        pointerEvents={disabled ? 'none' : 'auto'}
       >
-        <ScrollView
+        <MaterialMenu
+          style={style}
+          ref="menu"
+          disabled={disabled}
+          button={
+            <Text
+              style={{
+                flex: 1,
+              }}
+              onPress={onRequestOpen}
+              disabled={disabled}
+            >
+              {index >= 0 ? options[index] : placeholder}
+            </Text>
+          }
+          {...extraProps}
         >
-          {options.map(
-            (option, i) => (
-              <MenuItem
-                onPress={() => onOptionSelected(
-                  i,
-                  option,
-                )}
-              >
-                {option}
-              </MenuItem>
-            ),
-          )}
-        </ScrollView>
-      </MaterialMenu>
+          <ScrollView
+          >
+            {options.map(
+              (option, i) => (
+                <MenuItem
+                  onPress={() => onOptionSelected(
+                    i,
+                    option,
+                  )}
+                >
+                  {option}
+                </MenuItem>
+              ),
+            )}
+          </ScrollView>
+        </MaterialMenu>
+      </View>
     );
   }
 }
 
 SimpleDropdown.propTypes = {
+  theme: PropTypes.shape({}).isRequired,
   style: PropTypes.shape({}),
   index: PropTypes.number,
   open: PropTypes.bool,

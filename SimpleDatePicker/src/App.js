@@ -9,7 +9,12 @@ import SimpleDatePicker from './components/SimpleDatePicker';
 
 const App = () => (
   <View
-    style={StyleSheet.absoluteFill}
+    style={[
+      StyleSheet.absoluteFill,
+      {
+        backgroundColor: 'green',
+      },
+    ]}
   >
     <SimpleDatePicker
     />
