@@ -236,7 +236,7 @@ class SimpleDatePicker extends React.Component {
             <FontAwesomeIcon
               color={disabledColor}
               name="calendar"
-              size={20}
+              size={22}
             />
           </View>
           <View
