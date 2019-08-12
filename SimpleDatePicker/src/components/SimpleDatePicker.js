@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Alert,
+  Platform,
   View,
   StyleSheet,
 } from 'react-native';
 import Moment from 'moment';
 
 import SimpleDropdown from './SimpleDropdown';
+
+const pad = (n, z) => (Array(z).join('0') + (n)).slice(-z);
 
 const styles = StyleSheet
   .create(
@@ -61,6 +65,7 @@ class SimpleDatePicker extends React.Component {
         day,
         dayOpen: false,
       },
+      () => this.attemptUpdateCaller(),
     );
   }
   onMonthSelected = (month) => {
@@ -86,6 +91,7 @@ class SimpleDatePicker extends React.Component {
         day: nextDay,
         dayOpen: (nextDay !== day) || day < 0,
       },
+      () => this.attemptUpdateCaller(),
     );
   }
   onYearSelected = (year) => {
@@ -112,7 +118,30 @@ class SimpleDatePicker extends React.Component {
         monthOpen: month < 0,
         dayOpen: nextDay !== day,
       },
+      () => this.attemptUpdateCaller(),
     );
+  }
+  attemptUpdateCaller = () => {
+    const {
+      onDatePicked,
+    } = this.props;
+    if (onDatePicked) {
+      const {
+        day,
+        month,
+        year,
+      } = this.state;
+      if (day >= 0 && month >= 0 && year >= 0) {
+        const { yearData } = this.state;
+        return onDatePicked(
+          Moment(
+            `${yearData[year]}-${pad(month + 1, 2)}-${pad(day + 1, 2)}`,
+            'YYYY-MM-DD',
+          ),
+        );
+      }
+    }
+    return false;
   }
   onLayout = ({ nativeEvent: { layout: { width } } }) => this.setState(
     {
@@ -120,7 +149,7 @@ class SimpleDatePicker extends React.Component {
     },
   );
   static getDayData = (year, yearData, month, monthData) => {
-    const daysInMonth = (year >= 0 && month >= 0) ? (Moment(`${yearData[year]}-${(Array(2).join('0') + (month + 1)).slice(-2)}`).daysInMonth()) : 0;
+    const daysInMonth = (year >= 0 && month >= 0) ? (Moment(`${yearData[year]}-${pad(month + 1, 2)}`).daysInMonth()) : 0;
     return [...Array(daysInMonth)]
       .map((e, i) => i + 1);
   };
@@ -211,6 +240,7 @@ class SimpleDatePicker extends React.Component {
   }
 }
 
+// TODO: needs disabled 
 SimpleDatePicker.propTypes = {
   Container: PropTypes.func,
   theme: PropTypes.shape({}),
@@ -233,7 +263,16 @@ SimpleDatePicker.defaultProps = {
     
   },
   date: undefined,
-  onDatePicked: moment => null,
+  onDatePicked: (moment) => {
+    const msg = `${moment}`;
+    if (Platform.OS === 'web') {
+      return console.log(msg);
+    }
+    return Alert
+      .alert(
+        msg,
+      );
+  },
   minDate: Moment().subtract(3, 'years'),
   maxDate: Moment().add(3, 'years'),
 };
