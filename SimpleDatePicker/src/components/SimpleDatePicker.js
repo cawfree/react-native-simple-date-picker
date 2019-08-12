@@ -28,7 +28,7 @@ class SimpleDatePicker extends React.Component {
     const month = monthData.indexOf(moment.format('MMMM'));
     const numberOfYears = maxDate.diff(minDate, 'years', false);
     return [...Array(numberOfYears)]
-      .map((e, i) => Moment(minDate).add(i, 'years').format('YYYY'));
+      .map((e, i) => Moment(minDate).add(numberOfYears - i, 'years').format('YYYY'));
   }
   constructor(props) {
     super(props);
@@ -273,8 +273,8 @@ SimpleDatePicker.defaultProps = {
         msg,
       );
   },
-  minDate: Moment().subtract(3, 'years'),
-  maxDate: Moment().add(3, 'years'),
+  minDate: Moment().subtract(100, 'years'),
+  maxDate: Moment(),
 };
 
 export default SimpleDatePicker;
