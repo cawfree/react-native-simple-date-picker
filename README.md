@@ -2,7 +2,7 @@
 An idiot-proof date picker for React Native, backed by [moment.js](https://github.com/moment/moment).
 
 <p align="center">
-  <img src="./bin/out.gif" alt="@cawfree/react-native-simple-date-picker" width="400" height="800">
+  <img src="./bin/out.gif" alt="@cawfree/react-native-simple-date-picker" width="406" height="616">
 </p>
 
 ## 🚀 Getting Started
