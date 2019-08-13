@@ -64,7 +64,6 @@ const App = () => (
 
 ## 📋 Prop Types
 
-```
 
 | Prop Name             | Data Type             | Required  | Default                                                                                                                                           | Description                                                                                                                       |
 |---------------------  |---------------------  |---------- |-------------------------------------------------------------------------------------------------------------------------------------------------- |---------------------------------------------------------------------------------------------------------------------------------- |
@@ -75,7 +74,6 @@ const App = () => (
 | `minDate`             | propTypes.shape({})   | false     | Moment().subtract(100, 'years')                                                                                                                   | The minimum allowable selectable date.                                                                                            |
 | `maxDate`             | propTypes.shape({})   | false     | Moment()                                                                                                                                          | The maximum allowable selectable date.                                                                                            |
 | `renderDescription`   | propTypes.func        | false     | moment => <Text>{moment.format(...)}</Text>                                                                                                       | A function that can be called to render a React component once a valid date has been selected.                                    |
-```
 
 ## ✌️ License
 [MIT](https://opensource.org/licenses/MIT).
