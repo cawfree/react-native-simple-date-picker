@@ -46,6 +46,7 @@ class SimpleDropdown extends React.Component {
       index,
       placeholder,
       style,
+      isOptionDisabled,
       ...extraProps
     } = this.props;
     const {
@@ -88,6 +89,7 @@ class SimpleDropdown extends React.Component {
                     i,
                     option,
                   )}
+                  disabled={isOptionDisabled(option, i)}
                 >
                   {option}
                 </MenuItem>
@@ -110,6 +112,7 @@ SimpleDropdown.propTypes = {
   onOptionSelected: PropTypes.func,
   onRequestOpen: PropTypes.func,
   placeholder: PropTypes.string,
+  isOptionDisabled: PropTypes.func,
 };
 
 SimpleDropdown.defaultProps = {
@@ -123,6 +126,7 @@ SimpleDropdown.defaultProps = {
   onOptionSelected: (index, option) => null,
   onRequestOpen: () => null,
   placeholder: 'Please select...',
+  isOptionDisabled: (option, i) => false,
 };
 
 export default SimpleDropdown;

@@ -37,14 +37,11 @@ class SimpleDatePicker extends React.Component {
       .map((e, i) => Moment(minDate).add(numberOfYears - i, 'years').format('YYYY'));
   }
   static extrapolateStateFromMoment = (moment, minDate, maxDate) => {
-    console.log();
     const yearData = SimpleDatePicker
       .getYearData(
         minDate,
         maxDate,
       );
-    console.log('got year data');
-    console.log(JSON.stringify(yearData));
     const year = yearData.indexOf(moment.format('YYYY'));
     if (year < 0) {
       throw new Error(
@@ -341,6 +338,13 @@ class SimpleDatePicker extends React.Component {
               open={monthOpen}
               onOptionSelected={this.onMonthSelected}
               onRequestOpen={() => this.setState({ monthOpen: true })}
+              isOptionDisabled={(option, i) => {
+                const moment = Moment(`${yearData[year]}-${pad(i + 1, 2)}`);
+                return !moment.isBetween(
+                  minDate,
+                  maxDate,
+                );
+              }}
             />
           </View>
           <View
@@ -363,6 +367,13 @@ class SimpleDatePicker extends React.Component {
               open={dayOpen}
               onOptionSelected={this.onDaySelected}
               onRequestOpen={() => this.setState({ dayOpen: true })}
+              isOptionDisabled={(option, i) => {
+                const moment = Moment(`${yearData[year]}-${pad(month + 1, 2)}-${pad(i + 1, 2)}`);
+                return !moment.isBetween(
+                  minDate,
+                  maxDate,
+                );
+              }}
             />
           </View> 
         </View>
