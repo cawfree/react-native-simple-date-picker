@@ -1,12 +1,12 @@
 {
   "dependencies": {
     "moment": "^2.24.0",
-    "react-native-material-menu": "https://github.com/cawfree/react-native-material-menu",
+    "react-native-material-menu": "https://github.com/cawfree/react-native-material-menu/",
     "react-native-vector-icons": "^6.6.0",
     "react-timer-mixin": "^0.13.4"
   },
   "name": "@cawfree/react-native-simple-date-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An idiot-proof date picker for React Native.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-simple-date-picker",
