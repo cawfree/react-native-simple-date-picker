@@ -6,7 +6,7 @@
     "react-timer-mixin": "^0.13.4"
   },
   "name": "@cawfree/react-native-simple-date-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An idiot-proof date picker for React Native.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-simple-date-picker",
