@@ -157,28 +157,32 @@ class SimpleDatePicker extends React.Component {
     );
   }
   onYearSelected = (year) => {
+    const { maxDate, minDate } = this.props;
     const {
       day,
       yearData,
       month,
       monthData,
     } = this.state;
+    const monthIsValid = (month >= 0) && Moment(`${yearData[year]}-${pad(month + 1, 2)}`).isBetween(minDate, maxDate);
+    const nextMonth = monthIsValid ? month : -1;
     const dayData = SimpleDatePicker
       .getDayData(
         year,
         yearData,
-        month,
+        nextMonth,
         monthData,
       );
     const nextDay = (dayData.indexOf(day + 1) >= 0) ? day : -1;
     this.setState(
       {
         year,
+        month: nextMonth,
         dayData,
         day: nextDay,
         yearOpen: false,
-        monthOpen: month < 0,
-        dayOpen: nextDay !== day,
+        monthOpen: !monthIsValid || (month < 0),
+        dayOpen: monthIsValid && (nextDay !== day),
       },
       () => this.attemptUpdateCaller(),
     );
