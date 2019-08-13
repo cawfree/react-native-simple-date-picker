@@ -30,32 +30,73 @@ const styles = StyleSheet
   );
 
 class SimpleDatePicker extends React.Component {
-  static getYearData = (moment = Moment(), minDate = Moment(new Date(0)), maxDate = Moment(new Date(8640000000000000))) => {
-    const monthData = Moment.months();
-    const month = monthData.indexOf(moment.format('MMMM'));
+  // TODO: Realistic minima/maxima?
+  static getYearData = (minDate = Moment(new Date(0)), maxDate = Moment(new Date(8640000000000000))) => {
     const numberOfYears = maxDate.diff(minDate, 'years', false);
     return [...Array(numberOfYears)]
       .map((e, i) => Moment(minDate).add(numberOfYears - i, 'years').format('YYYY'));
   }
+  static extrapolateStateFromMoment = (moment, minDate, maxDate) => {
+    console.log();
+    const yearData = SimpleDatePicker
+      .getYearData(
+        minDate,
+        maxDate,
+      );
+    console.log('got year data');
+    console.log(JSON.stringify(yearData));
+    const year = yearData.indexOf(moment.format('YYYY'));
+    if (year < 0) {
+      throw new Error(
+        `A date was supplied which does not fall within the minimum/maximum range!`,
+      );
+    }
+    const monthData = Moment
+      .months();
+    const month = monthData.indexOf(moment.format('MMMM'));
+    const dayData = SimpleDatePicker.getDayData(
+      year,
+      yearData,
+      month,
+      monthData,
+    );
+    const day = dayData.indexOf(Number.parseInt(moment.format('D')));
+    // TODO: Should throw if year is not defined.
+    return {
+      monthOpen: false,
+      monthData,
+      month,
+      dayOpen: false,
+      day,
+      dayData,
+      yearOpen: false,
+      yearData,
+      year,
+    };
+  }
   constructor(props) {
     super(props);
-    const { minDate, maxDate } = props;
+    const { date, minDate, maxDate } = props;
     this.state = {
       width: undefined,
       monthOpen: false,
       monthData: Moment.months(),
       month: -1,
       dayOpen: false,
-      day: -1,
       dayData: [],
+      day: -1,
       yearOpen: false,
       yearData: SimpleDatePicker
         .getYearData(
-          undefined,
           minDate,
           maxDate,
         ),
       year: -1,
+      ...((!!date) && SimpleDatePicker.extrapolateStateFromMoment(
+        date,
+        minDate,
+        maxDate,
+      ) : {}),
     };
   }
   onRequestOpen = type => this.setState(
@@ -66,6 +107,23 @@ class SimpleDatePicker extends React.Component {
       [`${type}Open`]: true,
     },
   );
+  componentWillUpdate(nextProps, nextState) {
+    const { date } = nextProps;
+    // TODO: And date changed.
+    if ((!!date) && (date !== this.props.date)) {
+      const { minDate, maxDate } = nextProps;
+      this.setState(
+        {
+          ...SimpleDatePicker
+            .extrapolateStateFromMoment(
+              date,
+              minDate,
+              maxDate,
+            ),
+        },
+      );
+    }
+  }
   onDaySelected = (day) => {
     this.setState(
       {
@@ -347,7 +405,7 @@ SimpleDatePicker.defaultProps = {
     borderWidth: 1,
     highlightColor: 'blue',
   },
-  date: undefined,
+  date: undefined, //Moment(),
   onDatePicked: (moment) => {
     const msg = `${moment}`;
     if (Platform.OS === 'web') {
