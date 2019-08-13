@@ -7,11 +7,19 @@ import {
 
 import SimpleDatePicker from './components/SimpleDatePicker';
 
+const styles = StyleSheet
+  .create(
+    {
+      container: {
+        width: 250,
+        margin: 10,
+      },
+    },
+  );
+
 const App = () => (
   <View
-    style={{
-      width: 220,
-    }}
+    style={styles.container}
   >
     <SimpleDatePicker
     />

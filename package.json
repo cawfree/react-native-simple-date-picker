@@ -12,5 +12,8 @@
   "repository": "https://github.com/cawfree/react-native-simple-date-picker",
   "author": "Alex Thomas (@cawfree) <hello@cawfree.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "react-markdown-gen": "^0.0.11"
+  }
 }
