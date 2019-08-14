@@ -260,11 +260,11 @@ class SimpleDatePicker extends React.Component {
     } = theme;
     const dropdownStyle = {
       borderWidth,
-      padding,
       borderRadius,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'white',
+      padding,
     };
     const iconWidth = 25;
     const yearDisabled = false;//(dayOpen || monthOpen);
@@ -303,7 +303,6 @@ class SimpleDatePicker extends React.Component {
             style={[
               dropdownStyle,
               {
-                height,
                 marginHorizontal: padding,
                 width: sharedWidth * 0.30,
                 borderColor: yearOpen ? highlightColor : disabledColor,
@@ -326,7 +325,6 @@ class SimpleDatePicker extends React.Component {
             style={[
               dropdownStyle,
               {
-                height,
                 marginRight: padding,
                 width: sharedWidth * 0.5,
                 borderColor: monthOpen ? highlightColor : disabledColor,
@@ -356,7 +354,6 @@ class SimpleDatePicker extends React.Component {
             style={[
               dropdownStyle,
               {
-                height,
                 width: sharedWidth * 0.2,
                 borderColor: dayOpen ? highlightColor : disabledColor,
               },
@@ -433,12 +430,13 @@ SimpleDatePicker.defaultProps = {
   },
   minDate: Moment().subtract(100, 'years'),
   maxDate: Moment(),
-  renderDescription: (moment, { disabledColor }) => (
+  renderDescription: (moment, { padding, disabledColor }) => (
     <Text
       style={{
         color: disabledColor,
         alignSelf: 'flex-end',
         fontSize: 13,
+        marginTop: padding,
       }}
     >
       {`${moment.format('dddd LL')}.`}

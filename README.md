@@ -25,45 +25,48 @@ import {
   Platform,
   View,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+import { ModalProvider } from '@cawfree/react-native-modal-provider';
+import MaterialMenuModal from '@cawfree/react-native-modal-provider/RNModalProvider/src/components/MaterialMenuModal';
 
-import Moment from 'moment';
-import { SimpleDatePicker } from '@cawfree/react-native-simple-date-picker';
+import SimpleDatePicker from './components/SimpleDatePicker';
 
 const styles = StyleSheet
   .create(
     {
       container: {
         width: 250,
-        margin: 10,
       },
     },
   );
 
-// XXX: Note that you can initialize the rendered date using the `date` prop, or provide some custom view.
 const App = () => (
   <View
     style={styles.container}
   >
-    <SimpleDatePicker
-      theme={{
-        fontSize: 16,
-        color: '#444444',
-        disabledColor: '#CCCCCC',
-        borderRadius: 5,
-        padding: 5,
-        borderWidth: 1,
-        highlightColor: 'blue',
-      }}
-      minDate: Moment().subtract(10, 'years'),
-      maxDate: Moment().add(10, 'years'),
-      date={undefined}
-      onDatePicked={moment => console.log(moment)}
-      renderDescription={null}
-    />
+    <ModalProvider
+      ModalComponent={MaterialMenuModal}
+      position={({ x, y, width, height }) => ({
+        position: 'absolute',
+        left: x,
+        // XXX: Apply some additional padding.
+        top: y + height + 5,
+      })}
+    >
+    
+      <SimpleDatePicker
+      />
+    </ModalProvider>
   </View>
 );
 
+let hotWrapper = () => () => App;
+if (Platform.OS === 'web') {
+  const { hot } = require('react-hot-loader');
+  hotWrapper = hot;
+}
+export default hotWrapper(module)(App);
 ```
 
 ## 📋 Prop Types

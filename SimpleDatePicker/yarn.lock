@@ -1030,6 +1030,14 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@cawfree/react-native-modal-provider@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@cawfree/react-native-modal-provider/-/react-native-modal-provider-1.0.1.tgz#f3d16771f84b25dbfc924a5aabac6a63113a2d8c"
+  integrity sha512-4+q+GPmffPteWQYZBapb9XR577SUb90+pcg0KgSi4lNPQV5nU9DhRBAh3zn9biYHcjtvKzv9gAgyFuni9GE/Zw==
+  dependencies:
+    react-timer-mixin "^0.13.4"
+    uuid "^3.3.2"
+
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
@@ -9598,9 +9606,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-native-material-menu@https://github.com/cawfree/react-native-material-menu":
-  version "0.6.7"
-  resolved "https://github.com/cawfree/react-native-material-menu#f0a61238cb7bfdfbe30b7ccc9790b59fc2162af3"
+react-native-material-menu@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/react-native-material-menu/-/react-native-material-menu-0.6.6.tgz#65518d544401de1642f02600964ee13489b01348"
+  integrity sha512-9H2dUNgpD0RxwpUsnMnCRkNCThENfoqoXTv0CGS9DTTaqe5B4h95IuGoIF7MikcCCFtXucNucbm47aCaz4410Q==
   dependencies:
     prop-types "^15.6.0"
 

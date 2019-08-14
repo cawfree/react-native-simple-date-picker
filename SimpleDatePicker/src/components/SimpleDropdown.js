@@ -6,34 +6,27 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import MaterialMenu, { MenuItem } from 'react-native-material-menu';
+import { withModal } from '@cawfree/react-native-modal-provider';
+import { MenuItem } from 'react-native-material-menu';
+
+const ConnectedMaterialMenuModal =  withModal(
+  ({ children, ...extraProps }) => {
+    return (
+      <React.Fragment
+      >
+        {children}
+      </React.Fragment>
+    );
+  },
+  ({ layout, visible, button: ButtonComponent }) => {
+    return (
+      <ButtonComponent
+      />
+    );
+  },
+);
 
 class SimpleDropdown extends React.Component {
-  componentDidMount() {
-    const {
-      open,
-    } = this.props;
-    if (open) {
-      const { menu } = this.refs;
-      menu
-        .show();
-    }
-  }
-  componentWillUpdate(nextProps, nextState) {
-    const {
-      open,
-    } = nextProps;
-    if (open !== this.props.open) {
-      const { menu } = this.refs;
-      if (open) {
-        menu
-          .show();
-      } else {
-        menu
-          .hide();
-      }
-    }
-  }
   render() {
     const {
       theme,
@@ -56,31 +49,32 @@ class SimpleDropdown extends React.Component {
     } = theme;
     return (
       <View
-        style={[
-          style,
-        ]}
         pointerEvents={disabled ? 'none' : 'auto'}
       >
-        <MaterialMenu
+        <ConnectedMaterialMenuModal
+          visible={open}
           style={style}
           ref="menu"
           disabled={disabled}
           button={
-            <Text
-              style={{
-                flex: 1,
-                color: disabled ? disabledColor : color,
-                fontSize,
-              }}
-              onPress={onRequestOpen}
-              disabled={disabled}
-            >
-              {index >= 0 ? options[index] : placeholder}
-            </Text>
+            ({ ...extraProps }) => (
+              <Text
+                style={{
+                  flex: 1,
+                  color: disabled ? disabledColor : color,
+                  fontSize,
+                }}
+                onPress={onRequestOpen}
+                disabled={disabled}
+              >
+                {index >= 0 ? options[index] : placeholder}
+              </Text>
+            )
           }
           {...extraProps}
         >
           <ScrollView
+            style={style}
           >
             {options.map(
               (option, i) => (
@@ -96,7 +90,7 @@ class SimpleDropdown extends React.Component {
               ),
             )}
           </ScrollView>
-        </MaterialMenu>
+        </ConnectedMaterialMenuModal>
       </View>
     );
   }
