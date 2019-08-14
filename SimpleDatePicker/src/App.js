@@ -34,6 +34,7 @@ const App = () => (
     >
     
       <SimpleDatePicker
+        onDatePicked={console.log}
       />
     </ModalProvider>
   </View>

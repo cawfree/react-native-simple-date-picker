@@ -106,6 +106,13 @@ class SimpleDatePicker extends React.Component {
   );
   componentWillUpdate(nextProps, nextState) {
     const { date } = nextProps;
+    const {
+      day,
+      month,
+      year,
+    } = nextState;
+    const dayIsValid = (day >= 0) && (month >= 0) && (year >= 0);
+    const dayWasValid = (this.state.day >= 0) && (this.state.month >= 0) && (this.state.year >= 0);
     // TODO: And date changed.
     if ((!!date) && (date !== this.props.date)) {
       const { minDate, maxDate } = nextProps;
@@ -119,6 +126,11 @@ class SimpleDatePicker extends React.Component {
             ),
         },
       );
+    } else if (!dayIsValid && dayWasValid) {
+      const { onDatePicked } = nextProps;
+      if (onDatePicked) {
+        onDatePicked(undefined);
+      }
     }
   }
   onDaySelected = (day) => {

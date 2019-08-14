@@ -16,7 +16,7 @@
     "simple"
   ],
   "name": "@cawfree/react-native-simple-date-picker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An idiot-proof date picker for React Native.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-simple-date-picker",
