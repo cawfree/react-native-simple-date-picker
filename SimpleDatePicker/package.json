@@ -18,7 +18,7 @@
     "coverage:native": "node scripts/test.js --config \"./config/native.jest.config.js\" --coverage"
   },
   "dependencies": {
-    "@cawfree/react-native-modal-provider": "^1.0.1",
+    "@cawfree/react-native-modal-provider": "^1.0.2",
     "moment": "^2.24.0",
     "react": "^16.6.x",
     "react-app-polyfill": "^0.1.3",

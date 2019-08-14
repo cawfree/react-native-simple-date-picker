@@ -1030,10 +1030,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@cawfree/react-native-modal-provider@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cawfree/react-native-modal-provider/-/react-native-modal-provider-1.0.1.tgz#f3d16771f84b25dbfc924a5aabac6a63113a2d8c"
-  integrity sha512-4+q+GPmffPteWQYZBapb9XR577SUb90+pcg0KgSi4lNPQV5nU9DhRBAh3zn9biYHcjtvKzv9gAgyFuni9GE/Zw==
+"@cawfree/react-native-modal-provider@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cawfree/react-native-modal-provider/-/react-native-modal-provider-1.0.2.tgz#ad8c850ba9fa9dce723e762d9243feb08027f5f7"
+  integrity sha512-Erm4C9ebFKsfentky8+hizpdVSYITX3DzWpQbmUBsJ1rNoF7xYFIUVMKrk11fikQeR18/ClEQ9/T9zuHQW433w==
   dependencies:
     react-timer-mixin "^0.13.4"
     uuid "^3.3.2"
