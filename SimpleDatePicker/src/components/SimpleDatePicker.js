@@ -75,7 +75,7 @@ class SimpleDatePicker extends React.Component {
     super(props);
     const { date, minDate, maxDate } = props;
     this.state = {
-      width: undefined,
+      //width: undefined,
       monthOpen: false,
       monthData: Moment.months(),
       month: -1,
@@ -228,12 +228,12 @@ class SimpleDatePicker extends React.Component {
     }
     return null;
   };
-  onLayout = ({ nativeEvent: { layout: { width, height } } }) => this.setState(
-    {
-      width,
-      height,
-    },
-  );
+  //onLayout = ({ nativeEvent: { layout: { width, height } } }) => this.setState(
+  //  {
+  //    width,
+  //    height,
+  //  },
+  //);
   static getDayData = (year, yearData, month, monthData) => {
     const daysInMonth = (year >= 0 && month >= 0) ? (Moment(`${yearData[year]}-${pad(month + 1, 2)}`).daysInMonth()) : 0;
     return [...Array(daysInMonth)]
@@ -282,7 +282,8 @@ class SimpleDatePicker extends React.Component {
     const yearDisabled = false;//(dayOpen || monthOpen);
     const monthDisabled = (year < 0);// || (dayOpen || yearOpen);
     const dayDisabled = (month < 0);// || (monthOpen || yearOpen);
-    const sharedWidth = (width - ((3 * padding) + iconWidth));
+    //const sharedWidth = (width - ((3 * padding) + iconWidth));
+          //onLayout={this.onLayout}
     const currentMoment = this.getCurrentMoment();
     return (
       <Container
@@ -292,7 +293,6 @@ class SimpleDatePicker extends React.Component {
             flex: 1,
             flexDirection: 'row',
           }}
-          onLayout={this.onLayout}
         >
           <View
             style={[
@@ -316,7 +316,7 @@ class SimpleDatePicker extends React.Component {
               dropdownStyle,
               {
                 marginHorizontal: padding,
-                width: sharedWidth * 0.30,
+                flex: 0.3,
                 borderColor: yearOpen ? highlightColor : disabledColor,
               },
             ]}
@@ -338,7 +338,7 @@ class SimpleDatePicker extends React.Component {
               dropdownStyle,
               {
                 marginRight: padding,
-                width: sharedWidth * 0.5,
+                flex: 0.5,
                 borderColor: monthOpen ? highlightColor : disabledColor,
               },
             ]}
@@ -366,7 +366,7 @@ class SimpleDatePicker extends React.Component {
             style={[
               dropdownStyle,
               {
-                width: sharedWidth * 0.2,
+                flex: 0.2,
                 borderColor: dayOpen ? highlightColor : disabledColor,
               },
             ]}
