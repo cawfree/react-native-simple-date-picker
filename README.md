@@ -1,7 +1,7 @@
 # @cawfree/react-native-simple-date-picker
 An idiot-proof date picker for React Native, backed by [moment.js](https://github.com/moment/moment).
 
-🚨 ** This project has been deprecated. Please use [@cawfree/react-native-simpler-date-picker](https://github.com/cawfree/react-native-simpler-date-picker).**
+🚨 **This project has been deprecated. Please use [@cawfree/react-native-simpler-date-picker](https://github.com/cawfree/react-native-simpler-date-picker).**
 
 <p align="center">
   <img src="./bin/out.gif" alt="@cawfree/react-native-simple-date-picker" width="406" height="616">
